@@ -1,22 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import TeamCard from './TeamCard'
 import TeamsData from '../data/teams'
+import PlayersData from '../data/players'
 
 const TeamsPage = () => {
 
     const [ teams, setTeams ] = useState([])
 
-    const [ showPopup, setShowPopup ] = useState(false)
+    const [ players, setPlayers ] = useState([])
+
+    const [ showAddTeam, setShowAddTeam ] = useState(false)
+
+    const [ showAddPlayer, setShowAddPlayer ] = useState(false)
 
     const [ newTeam, setNewTeam ] = useState("")
 
+    const [ aPlayers, setAPlayers ] = useState([])
+
+    const [ playersToAdd, setPlayersToAdd ] = useState([])
+
+    const [ targetTeam, setTargetTeam ] = useState(null)
+
+
     useEffect(()=>{
         setTeams(TeamsData)
+        setPlayers(PlayersData)
     },[])
 
-    const addTeam = () =>{ togglePopup() }
-
-    const togglePopup = () => {setShowPopup(!showPopup)}
+    const addTeam = () =>{ setShowAddTeam(true) }
 
     const removeTeam = ( deleteteam ) => {
         const removedTeams = teams.filter(team => team.name != deleteteam)
@@ -25,27 +36,66 @@ const TeamsPage = () => {
     
     const saveTeam = (e) => {
         setTeams([...teams, { name: newTeam, players: [] }])
-        setShowPopup(false)
+        setShowAddTeam(false)
         setNewTeam("")
     }
 
     const removePlayer = ( _team, _player ) =>{
         const targetIdx = teams.findIndex(team => team.name === _team)
-        const filterPlayer = teams[targetIdx].players.filter(player => player != _player)
+        const filterPlayer = teams[targetIdx].players.filter(player => player !== _player)
         const modTeam = { ...teams[targetIdx], players: filterPlayer }
         const newTeams = teams.map((team, index) => index !== targetIdx ? team : modTeam)
         setTeams(newTeams)
     }
 
+    const addPlayer = ( _teamName ) => {
+        setShowAddPlayer(true)
+        availablePlayers()
+        setTargetTeam(_teamName)
+    }
+
+    const availablePlayers = () => {
+        let usedPlayers = []
+        teams.map( team => team.players.forEach(player => usedPlayers.push(player)))
+        let availPlayers = []
+        players.forEach(player => {if(!usedPlayers.includes(player.name)) availPlayers.push(player.name) })
+        setAPlayers(availPlayers)
+    }
+
+    const addPlayerToTeam = ( e ) =>{
+        if (!playersToAdd.includes(e.target.innerHTML)) {
+            setPlayersToAdd([...playersToAdd, e.target.innerHTML])
+        }
+    }
+
+    const cancelAddingPlayer = () =>{
+        setShowAddPlayer(false)
+        setPlayersToAdd([])
+    }
+
+    const savePlayersToTeam = () =>{
+        if (playersToAdd.length > 0){
+            const targetIdx = teams.findIndex(team => team.name === targetTeam)
+            const modPlayers = [ ...teams[targetIdx].players, ...playersToAdd ]
+            const modTeam = { name: teams[targetIdx].name, players: modPlayers } 
+            const updatedTeams = teams.map((team, index) => index !== targetIdx ? team : modTeam)
+            setTeams(updatedTeams)
+            setShowAddPlayer(false)
+            setPlayersToAdd([])
+        }
+    }
+
+    
+
     return (
         <div className="flex flex-col">
             <button className="self-end my-3 border rounded-full px-2 py-1" onClick={addTeam}>Create new</button>
             <div className="w-full flex flex-wrap justify-center">
-                {teams.map((team,index )=> <TeamCard key={ index } team={ team } removeTeam={removeTeam} removePlayer={removePlayer} />)}
+                {teams.map((team,index )=> <TeamCard key={ index } team={ team } removeTeam={removeTeam} removePlayer={removePlayer} addPlayer={ addPlayer }/>)}
             </div>
 
-            {/* Modal that will be asking the user for input */}
-            <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showPopup ? "block" : "hidden"}`}>
+            {/* Modal that will be asking the user for input to create new team */}
+            <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showAddTeam ? "block" : "hidden"}`}>
                 <input 
                     type="text" 
                     className="my-3 mx-2 border border-black w-screen-3/4 h-screen-1/10 text-center text-2xl rounded-full" 
@@ -54,7 +104,32 @@ const TeamsPage = () => {
                 />
                 <div>
                     <button className="border px-10 py-3 mx-2 rounded-full bg-pink-600 text-white" onClick={saveTeam}>Create</button>
-                    <button className="border px-10 py-3 mx-2 rounded-full bg-gray-600 text-white" onClick={togglePopup}>Cancel</button>
+                    <button className="border px-10 py-3 mx-2 rounded-full bg-gray-600 text-white" onClick={() => setShowAddTeam(false)}>Cancel</button>
+                </div>
+            </div>
+
+            {/* Modal for adding a player to a team */}
+            <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showAddPlayer ? "block" : "hidden"}`}>
+                <div className="flex w-screen-1/2">
+                    <ul className="w-1/2 mb-3 justify-centre border">
+                        {
+                            aPlayers.length > 0 ? aPlayers.map(player => (
+                                !playersToAdd.includes(player) &&
+                                <li key={player} className="text-center py-2 border hover:bg-pink-100 cursor-pointer" onClick={addPlayerToTeam}>{ player }</li>
+                            )) : (<div>No players are available at the moment</div>)
+                        }
+                    </ul>
+                    <ul className="w-1/2 border mb-3">
+                        {
+                            playersToAdd.length > 0 ? playersToAdd.map(player =>(
+                                <li className="text-center py-2 border hover:bg-pink-100 cursor-pointer" key={player}>{ player }</li>
+                            )): (<div>No players added yet</div>)
+                        }
+                    </ul>
+                </div>
+                <div>
+                    <button className="border px-10 py-3 mx-2 rounded-full bg-pink-600 text-white" onClick={savePlayersToTeam}>Add Players</button>
+                    <button className="border px-10 py-3 mx-2 rounded-full bg-gray-600 text-white" onClick={cancelAddingPlayer}>Cancel</button>
                 </div>
             </div>
         </div>

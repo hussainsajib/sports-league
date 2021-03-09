@@ -1,8 +1,8 @@
 import React from 'react'
 import { MdDelete } from 'react-icons/md';
-import { AiFillCloseSquare } from 'react-icons/ai'
+import { BsPersonPlusFill } from 'react-icons/bs'
 
-const TeamCard = ({ team, removeTeam, removePlayer }) => {
+const TeamCard = ({ team, removeTeam, removePlayer, addPlayer }) => {
     
     return (
         <div className="border w-2/5 mx-5 my-3 p-4">
@@ -10,7 +10,8 @@ const TeamCard = ({ team, removeTeam, removePlayer }) => {
                 <div className="text-xl w-5/6 text-center">
                     { team.name }
                 </div>
-                <MdDelete className="text-2xl" onClick={ () => removeTeam(team.name) }/>
+                <BsPersonPlusFill className="text-2xl mx-1" onClick={ () => addPlayer(team.name) } />
+                <MdDelete className="text-2xl mx-1" onClick={ () => removeTeam(team.name) }/>
             </div>
             <ul className="mt-5">
                 {
