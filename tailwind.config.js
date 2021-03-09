@@ -10,6 +10,7 @@ module.exports = {
         'screen-3/4': '75vw',
         'screen-4/5': '80vw',
         'screen-9/10': '90vw',
+        'screen-95/100': '95vw',
       },
       height:{
         'screen-1/10': '10vh',
@@ -21,6 +22,12 @@ module.exports = {
         'screen-3/4': '75vh',
         'screen-4/5': '80vh',
         'screen-9/10': '90vh',
+        'screen-95/100': '95vh'
+      },
+      screens:{
+        'mob': '250px',
+        'tab': '500px',
+        'lap': '900px',
       }
     },
   },

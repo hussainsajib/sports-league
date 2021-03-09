@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import './App.css';
 import PlayerPage from './components/PlayerPage'
 import TeamsPage from './components/TeamsPage'
 
-import PlayersData from './data/players'
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,18 +14,17 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
+        <nav className="mt-5">
           <ul className="flex justify-center w-full">
-            <li className="mx-5 my-5"><Link to="/">Teams</Link></li>
-            <li className="mx-5 my-5"><Link to="/players">Players</Link></li>
+            <li className="px-5 pb-2 border-b-2 border-white hover:border-b-2 hover:border-pink-400 cursor-pointer"><Link to="/">Teams</Link></li>
+            <li className="px-5 pb-2 border-b-2 border-white hover:border-b-2 hover:border-pink-400 cursor-pointer"><Link to="/players">Players</Link></li>
           </ul>
         </nav>
-        <h1>Sports Leage</h1>
       </div>
-      <div className="mt-20 w-3/4 mx-auto">
+      <div className="mt-5 mx-auto w-screen-95/100 lap:mt-20 lap:w-3/4">
         <Switch>
           <Route exact path='/'><TeamsPage /></Route>
-          <Route exact path='/players'><PlayerPage players={PlayersData} /></Route>
+          <Route exact path='/players'><PlayerPage /></Route>
         </Switch>
       </div>
     </Router>

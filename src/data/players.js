@@ -38,6 +38,14 @@ const players = [
     {
         name: 'player ten',
         team: 'team five'
+    },
+    {
+        name: 'player eleven',
+        team: null
+    },
+    {
+        name: 'player twelve',
+        team: null
     }
 ]
 

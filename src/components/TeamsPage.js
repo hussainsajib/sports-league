@@ -30,7 +30,7 @@ const TeamsPage = () => {
     const addTeam = () =>{ setShowAddTeam(true) }
 
     const removeTeam = ( deleteteam ) => {
-        const removedTeams = teams.filter(team => team.name != deleteteam)
+        const removedTeams = teams.filter(team => team.name !== deleteteam)
         setTeams(removedTeams)
     }
     
@@ -91,7 +91,7 @@ const TeamsPage = () => {
 
     return (
         <div className="flex flex-col">
-            <button className="self-end my-3 mr-20 rounded-full px-4 py-1 bg-pink-100 text-pink-600 hover:shadow" onClick={addTeam}>Add Team</button>
+            <button className="rounded-full px-4 py-1 bg-pink-100 text-pink-600 hover:shadow self-center m-2 lap:self-end lap:my-3 lap:mr-20" onClick={addTeam}>Add Team</button>
             <div className="w-full flex flex-wrap justify-center">
                 {teams.map((team,index )=> <TeamCard key={ index } team={ team } removeTeam={removeTeam} removePlayer={removePlayer} addPlayer={ addPlayer }/>)}
             </div>
@@ -100,7 +100,7 @@ const TeamsPage = () => {
             <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showAddTeam ? "block" : "hidden"}`}>
                 <input 
                     type="text" 
-                    className="my-3 mx-2 border border-black w-screen-3/4 h-screen-1/10 text-center text-2xl rounded-full" 
+                    className="my-3 mx-2 border border-black w-screen-3/4 h-screen-1/10 text-center rounded-full text-sm lap:text-2xl" 
                     placeholder="enter team name and press 'Create'" 
                     onChange={ (e) => setNewTeam(e.target.value) }
                 />
@@ -112,7 +112,7 @@ const TeamsPage = () => {
 
             {/* Modal for adding a player to a team */}
             <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showAddPlayer ? "block" : "hidden"}`}>
-                <div className="flex w-screen-1/2 mb-3">
+                <div className="flex mb-3 w-screen-9/10 lap:w-screen-1/2 ">
                     <ul className="w-1/2 h-full mb-3 mr-1 border border-pink-500 bg-white">
                         {
                             aPlayers.length > 0 ? aPlayers.map(player => (
