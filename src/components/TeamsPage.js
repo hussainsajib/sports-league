@@ -29,11 +29,19 @@ const TeamsPage = () => {
         setNewTeam("")
     }
 
+    const removePlayer = ( _team, _player ) =>{
+        const targetIdx = teams.findIndex(team => team.name === _team)
+        const filterPlayer = teams[targetIdx].players.filter(player => player != _player)
+        const modTeam = { ...teams[targetIdx], players: filterPlayer }
+        const newTeams = teams.map((team, index) => index !== targetIdx ? team : modTeam)
+        setTeams(newTeams)
+    }
+
     return (
         <div className="flex flex-col">
             <button className="self-end my-3 border rounded-full px-2 py-1" onClick={addTeam}>Create new</button>
             <div className="w-full flex flex-wrap justify-center">
-                {teams.map((team,index )=> <TeamCard key={ index } team={ team } remove={removeTeam} />)}
+                {teams.map((team,index )=> <TeamCard key={ index } team={ team } removeTeam={removeTeam} removePlayer={removePlayer} />)}
             </div>
 
             {/* Modal that will be asking the user for input */}
