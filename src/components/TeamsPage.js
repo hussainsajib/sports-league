@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import TeamCard from './TeamCard'
 import TeamsData from '../data/teams'
 
@@ -14,12 +14,15 @@ const TeamsPage = () => {
         setTeams(TeamsData)
     },[])
 
-    const addTeam = () =>{
-        togglePopup()
+    const addTeam = () =>{ togglePopup() }
+
+    const togglePopup = () => {setShowPopup(!showPopup)}
+
+    const removeTeam = ( deleteteam ) => {
+        const removedTeams = teams.filter(team => team.name != deleteteam)
+        setTeams(removedTeams)
     }
-
-    const togglePopup =  () => setShowPopup(!showPopup)
-
+    
     const saveTeam = (e) => {
         setTeams([...teams, { name: newTeam, players: [] }])
         setShowPopup(false)
@@ -30,8 +33,10 @@ const TeamsPage = () => {
         <div className="flex flex-col">
             <button className="self-end my-3 border rounded-full px-2 py-1" onClick={addTeam}>Create new</button>
             <div className="w-full flex flex-wrap justify-center">
-                {teams.map((team,index )=> <TeamCard key={ index } team={ team } />)}
+                {teams.map((team,index )=> <TeamCard key={ index } team={ team } remove={removeTeam} />)}
             </div>
+
+            {/* Modal that will be asking the user for input */}
             <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showPopup ? "block" : "hidden"}`}>
                 <input 
                     type="text" 
