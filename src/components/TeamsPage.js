@@ -1,9 +1,10 @@
 import React from 'react'
+import TeamCard from './TeamCard'
 
 const TeamsPage = ({ teams }) => {
     return (
-        <div>
-            {teams.map((team,index )=> <div key={index}>{team.name}</div>)}
+        <div className="w-full flex flex-wrap">
+            {teams.map((team,index )=> <TeamCard key={ index } team={ team } />)}
         </div>
     )
 }
