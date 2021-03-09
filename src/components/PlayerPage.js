@@ -1,9 +1,11 @@
 import React from 'react'
 
-const PlayerPage = () => {
+const PlayerPage = ({ players }) => {
     return (
         <div>
-            Player Page
+            {
+                players.map(player => <div key={player.name}>{ player.name }</div>)
+            }
         </div>
     )
 }

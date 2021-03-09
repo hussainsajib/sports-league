@@ -1,4 +1,4 @@
-export const teams = [
+const teams = [
     {
         name: 'Team One',
         players: ['player one', 'player two']
@@ -20,3 +20,5 @@ export const teams = [
         players: [ 'player nine', 'player ten' ]
     }
 ]
+
+export default teams;

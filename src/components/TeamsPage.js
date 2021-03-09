@@ -1,9 +1,9 @@
 import React from 'react'
 
-const TeamsPage = () => {
+const TeamsPage = ({ teams }) => {
     return (
         <div>
-            Teams Page
+            {teams.map((team,index )=> <div key={index}>{team.name}</div>)}
         </div>
     )
 }

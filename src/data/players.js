@@ -1,4 +1,4 @@
-export const players = [
+const players = [
     {
         name: 'player one',
         team: 'team one'
@@ -40,3 +40,5 @@ export const players = [
         team: 'team five'
     }
 ]
+
+export default players;
