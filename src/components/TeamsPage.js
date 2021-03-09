@@ -35,6 +35,8 @@ const TeamsPage = () => {
     }
     
     const saveTeam = (e) => {
+        const inputField = e.target.parentNode.parentNode.firstChild
+        inputField.value = ""
         setTeams([...teams, { name: newTeam, players: [] }])
         setShowAddTeam(false)
         setNewTeam("")
