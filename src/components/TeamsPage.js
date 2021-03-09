@@ -5,35 +5,46 @@ import PlayersData from '../data/players'
 
 const TeamsPage = () => {
 
+    // state for all the teams
     const [ teams, setTeams ] = useState([])
 
+    // state for all the players
     const [ players, setPlayers ] = useState([])
 
+    // state to identify whether to show modal to add a new team
     const [ showAddTeam, setShowAddTeam ] = useState(false)
 
+    // state to identify whether to show modal to add a player to a team
     const [ showAddPlayer, setShowAddPlayer ] = useState(false)
+
 
     const [ newTeam, setNewTeam ] = useState("")
 
+    // state to hold all available players
     const [ aPlayers, setAPlayers ] = useState([])
 
+    // state to hold all player who are in process of being added to a team
     const [ playersToAdd, setPlayersToAdd ] = useState([])
 
+    // state to keep track of the target team where players are being added
     const [ targetTeam, setTargetTeam ] = useState(null)
 
-
+    // retrieve and set the main dataset
     useEffect(()=>{
         setTeams(TeamsData)
         setPlayers(PlayersData)
     },[])
 
+    // function to show modal for adding new team
     const addTeam = () =>{ setShowAddTeam(true) }
 
+    // function to handle removal of a team
     const removeTeam = ( deleteteam ) => {
         const removedTeams = teams.filter(team => team.name !== deleteteam)
         setTeams(removedTeams)
     }
     
+    // function to save and cleanup after creating a new team
     const saveTeam = (e) => {
         const inputField = e.target.parentNode.parentNode.firstChild
         inputField.value = ""
@@ -42,6 +53,7 @@ const TeamsPage = () => {
         setNewTeam("")
     }
 
+    // function to remove a player from a team
     const removePlayer = ( _team, _player ) =>{
         const targetIdx = teams.findIndex(team => team.name === _team)
         const filterPlayer = teams[targetIdx].players.filter(player => player !== _player)
@@ -50,12 +62,14 @@ const TeamsPage = () => {
         setTeams(newTeams)
     }
 
+    // primary function to set the perimeters to remove a player
     const addPlayer = ( _teamName ) => {
         setShowAddPlayer(true)
         availablePlayers()
         setTargetTeam(_teamName)
     }
 
+    // function to find all the available players
     const availablePlayers = () => {
         let usedPlayers = []
         teams.map( team => team.players.forEach(player => usedPlayers.push(player)))
@@ -64,17 +78,21 @@ const TeamsPage = () => {
         setAPlayers(availPlayers)
     }
 
+    // function to handle when a player is being added to the array containing all players
+    // who will be added to a particular team
     const addPlayerToTeam = ( e ) =>{
         if (!playersToAdd.includes(e.target.innerHTML)) {
             setPlayersToAdd([...playersToAdd, e.target.innerHTML])
         }
     }
 
+    // Function to handle if the user cancels out of the modal
     const cancelAddingPlayer = () =>{
         setShowAddPlayer(false)
         setPlayersToAdd([])
     }
 
+    // function to actually add the added players to the team
     const savePlayersToTeam = () =>{
         if (playersToAdd.length > 0){
             const targetIdx = teams.findIndex(team => team.name === targetTeam)
@@ -88,7 +106,6 @@ const TeamsPage = () => {
     }
 
     
-
     return (
         <div className="flex flex-col">
             <button className="rounded-full px-4 py-1 bg-pink-100 text-pink-600 hover:shadow self-center m-2 lap:self-end lap:my-3 lap:mr-20" onClick={addTeam}>Add Team</button>
