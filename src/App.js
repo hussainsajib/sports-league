@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css';
 import PlayerPage from './components/PlayerPage'
 import TeamsPage from './components/TeamsPage'
-import TeamsData from './data/teams'
+
 import PlayersData from './data/players'
 import {
   BrowserRouter as Router,
@@ -25,7 +25,7 @@ function App() {
       </div>
       <div className="mt-20 w-3/4 border mx-auto">
         <Switch>
-          <Route exact path='/'><TeamsPage teams={TeamsData} /></Route>
+          <Route exact path='/'><TeamsPage /></Route>
           <Route exact path='/players'><PlayerPage players={PlayersData} /></Route>
         </Switch>
       </div>
