@@ -5,7 +5,7 @@ import { BsPersonPlusFill } from 'react-icons/bs'
 const TeamCard = ({ team, removeTeam, removePlayer, addPlayer }) => {
     
     return (
-        <div className="border w-2/5 mx-5 my-3 p-4">
+        <div className="border w-2/5 mx-5 my-3 py-5 px-4 shadow-lg rounded-lg">
             <div className="flex justify-center">
                 <div className="text-xl w-5/6 text-center">
                     { team.name }
@@ -16,8 +16,8 @@ const TeamCard = ({ team, removeTeam, removePlayer, addPlayer }) => {
             <ul className="mt-5">
                 {
                     team.players.map(player => (
-                        <li key={player}>
-                            <input type="checkbox" checked onChange={ () => {} } onClick={ () => removePlayer(team.name, player) }/>
+                        <li key={player} className="flex items-baseline mb-2">
+                            <input type="checkbox" checked onChange={ () => {} } onClick={ () => removePlayer(team.name, player) } className="mr-2"/>
                             { player }
                         </li>
                     ))

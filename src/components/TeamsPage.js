@@ -91,7 +91,7 @@ const TeamsPage = () => {
 
     return (
         <div className="flex flex-col">
-            <button className="self-end my-3 border rounded-full px-2 py-1" onClick={addTeam}>Create new</button>
+            <button className="self-end my-3 mr-20 rounded-full px-4 py-1 bg-pink-100 text-pink-600 hover:shadow" onClick={addTeam}>Add Team</button>
             <div className="w-full flex flex-wrap justify-center">
                 {teams.map((team,index )=> <TeamCard key={ index } team={ team } removeTeam={removeTeam} removePlayer={removePlayer} addPlayer={ addPlayer }/>)}
             </div>
@@ -101,7 +101,7 @@ const TeamsPage = () => {
                 <input 
                     type="text" 
                     className="my-3 mx-2 border border-black w-screen-3/4 h-screen-1/10 text-center text-2xl rounded-full" 
-                    placeholder="enter team name and press Save" 
+                    placeholder="enter team name and press 'Create'" 
                     onChange={ (e) => setNewTeam(e.target.value) }
                 />
                 <div>
@@ -112,20 +112,20 @@ const TeamsPage = () => {
 
             {/* Modal for adding a player to a team */}
             <div className={`w-screen h-screen fixed z-10 inset-0 border flex flex-col justify-center items-center bg-white bg-opacity-90 ${showAddPlayer ? "block" : "hidden"}`}>
-                <div className="flex w-screen-1/2">
-                    <ul className="w-1/2 mb-3 justify-centre border">
+                <div className="flex w-screen-1/2 mb-3">
+                    <ul className="w-1/2 h-full mb-3 mr-1 border border-pink-500 bg-white">
                         {
                             aPlayers.length > 0 ? aPlayers.map(player => (
                                 !playersToAdd.includes(player) &&
-                                <li key={player} className="text-center py-2 border hover:bg-pink-100 cursor-pointer" onClick={addPlayerToTeam}>{ player }</li>
-                            )) : (<div>No players are available at the moment</div>)
+                                <li key={player} className="text-center py-2 hover:bg-pink-100 cursor-pointer" onClick={addPlayerToTeam}>{ player }</li>
+                            )) : (<div className="text-center">No players are available at the moment</div>)
                         }
                     </ul>
-                    <ul className="w-1/2 border mb-3">
+                    <ul className="w-1/2 h-full border mb-3 ml-1 border-pink-500 bg-white">
                         {
                             playersToAdd.length > 0 ? playersToAdd.map(player =>(
-                                <li className="text-center py-2 border hover:bg-pink-100 cursor-pointer" key={player}>{ player }</li>
-                            )): (<div>No players added yet</div>)
+                                <li className="text-center py-2 hover:bg-pink-100 cursor-pointer" key={player}>{ player }</li>
+                            )): (<div className="text-center">No players added yet</div>)
                         }
                     </ul>
                 </div>

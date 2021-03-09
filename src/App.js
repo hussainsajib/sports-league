@@ -23,7 +23,7 @@ function App() {
         </nav>
         <h1>Sports Leage</h1>
       </div>
-      <div className="mt-20 w-3/4 border mx-auto">
+      <div className="mt-20 w-3/4 mx-auto">
         <Switch>
           <Route exact path='/'><TeamsPage /></Route>
           <Route exact path='/players'><PlayerPage players={PlayersData} /></Route>
